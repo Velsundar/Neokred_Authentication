@@ -158,7 +158,7 @@ const Login = () => {
         </Formik>
         <Typography variant="body2" color={theme.palette.text.secondary}>
           Don't have an account?{" "}
-          <Link href="#" color="primary">
+          <Link href="/register" color="primary">
             Sign up
           </Link>
         </Typography>
