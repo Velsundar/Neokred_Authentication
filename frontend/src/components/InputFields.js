@@ -1,15 +1,20 @@
-// InputField.js
 import React from 'react';
-import { TextField } from '@mui/material';
+import { TextField, Typography, Box } from '@mui/material';
 
-const InputField = ({ label, ...props }) => {
+const InputField = ({ label,required,color,placeholder, ...props }) => {
   return (
-    <TextField
-      label={label}
-      variant="outlined"
-      fullWidth
-      {...props}
-    />
+    <Box marginBottom="8px">
+      <Typography variant="body1" gutterBottom style={{ textAlign: "left" }} color={color}>
+        {label}{required && <span style={{ color: "red" }}>*</span>}
+      </Typography>
+      <TextField
+        variant="outlined"
+        placeholder={placeholder}
+        fullWidth
+        {...props}
+        size='small'
+      />
+    </Box>
   );
 };
 

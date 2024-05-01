@@ -2,9 +2,9 @@
 import React from 'react';
 import { Button as MuiButton } from '@mui/material';
 
-const Button = ({ children, ...props }) => {
+const Button = ({ children, width, ...props }) => {
   return (
-    <MuiButton {...props}>
+    <MuiButton sx={{ width }}{...props}>
       {children}
     </MuiButton>
   );
