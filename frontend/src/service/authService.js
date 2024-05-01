@@ -5,7 +5,7 @@ import { REGISTER_API } from "../config/apiRoutes";
 export const login = async (credentials) => {
   try {
     const response = await axios.post(LOGIN_API, credentials);
-    return response.data.token;
+    return response;
   } catch (error) {
     throw error.response.data;
   }

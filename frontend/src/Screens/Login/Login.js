@@ -8,7 +8,10 @@ import theme from "../../styles/theme";
 import { Formik, Form, Field } from "formik";
 import { LoginSchema } from "../../data/YUP/Login.yup";
 import logo from "../../Assets/Images/logo.png";
-
+import { login } from "../../service/authService";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 const RootContainer = styled("div")({
   display: "flex",
   height: "100vh",
@@ -65,14 +68,25 @@ const LoginForm = styled(Form)(({ theme }) => ({
 }));
 
 const Login = () => {
+  const navigate = useNavigate();
   const initialValues = {
     email: "",
     password: "",
   };
 
-  const handleSubmit = (values, { resetForm }) => {
-    console.log(values);
-    resetForm();
+  const handleSubmit = async (values, { resetForm }) => {
+    try {
+      const response = await login(values);
+      console.log("Registration successful. Token:", response);
+      const token = response.data.token;
+      console.log("token", token);
+      resetForm();
+      localStorage.setItem("token", token);
+      toast.success(response.data.message);
+      navigate("/profile");
+    } catch (error) {
+      toast.error("An error occured");
+    }
   };
   return (
     <RootContainer>
@@ -146,6 +160,7 @@ const Login = () => {
                 variant="contained"
                 color="primary"
                 width="75%"
+                type="submit"
                 style={{
                   marginTop: "8px",
                   backgroundColor: theme.palette.primary.button,
