@@ -3,6 +3,6 @@ const { secret } = require('../config/database');
 
 exports.generateToken = (user) => {
     return jwt.sign({ id: user._id }, secret, {
-        expiresIn: 86400
+        expiresIn: 300
     });
 };

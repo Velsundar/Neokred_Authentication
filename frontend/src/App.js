@@ -15,15 +15,19 @@ const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(
     () => !!localStorage.getItem("token")
   );
+
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsAuthenticated(!!token);
+    const handleStorageChange = () => {
+      setIsAuthenticated(!!localStorage.getItem("token"));
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    setIsAuthenticated(false);
-  };
 
   const handleLogin = (token) => {
     setIsAuthenticated(true);
