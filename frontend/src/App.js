@@ -1,5 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import Login from "./Screens/Login/Login";
 import Profile from "./Screens/Profile/Profile";
 import SignupForm from "./Screens/Login/SignupForm";
@@ -12,10 +17,10 @@ const App = () => {
       <ToastContainer />
       <Router>
         <Routes>
+          <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Profile />} />
           <Route path="/register" element={<SignupForm />} />
-          {/* Add more routes for other pages if needed */}
         </Routes>
       </Router>
     </>
