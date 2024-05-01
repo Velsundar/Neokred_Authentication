@@ -8,6 +8,10 @@ import { Typography } from "@mui/material";
 import theme from "../styles/theme"
 
 export default function NavBar({ username }) {
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        window.location.reload();
+      };
   return (
     <AppBar position="fixed" color="inherit" elevation={0}>
       <Toolbar sx={{ justifyContent: "space-between" }}>
@@ -28,7 +32,7 @@ export default function NavBar({ username }) {
           <Typography variant="body1" component="div" color={theme.palette.text.secondary}>
             {username}
           </Typography>
-          <Button color="inherit">Logout</Button>
+          <Button color="inherit" onClick={handleLogout}>Logout</Button>
         </Box>
       </Toolbar>
     </AppBar>

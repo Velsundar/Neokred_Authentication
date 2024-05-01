@@ -67,7 +67,7 @@ const LoginForm = styled(Form)(({ theme }) => ({
   flexDirection: "column",
 }));
 
-const Login = () => {
+const Login = ({ onLogin }) => {
   const navigate = useNavigate();
   const initialValues = {
     email: "",
@@ -82,7 +82,9 @@ const Login = () => {
       console.log("token", token);
       resetForm();
       localStorage.setItem("token", token);
+      onLogin()
       toast.success(response.data.message);
+      console.log("Login successful. Navigating to profile page...");
       navigate("/profile");
     } catch (error) {
       toast.error("An error occured");
