@@ -7,6 +7,7 @@ import Button from "../../components/Buttons";
 import theme from "../../styles/theme";
 import { Formik, Form, Field } from "formik";
 import { LoginSchema } from "../../data/YUP/Login.yup";
+import logo from "../../Assets/Images/logo.png";
 
 const RootContainer = styled("div")({
   display: "flex",
@@ -22,12 +23,23 @@ const LeftPane = styled(Box)(({ theme }) => ({
 }));
 
 const ImageContainer = styled("div")({
+  position: "relative",
   maxWidth: "90%",
   maxHeight: "80%",
   "& img": {
     maxWidth: "100%",
     maxHeight: "100%",
   },
+  [theme.breakpoints.down("sm")]: {
+    display: "none",
+  },
+});
+
+const Logo = styled("img")({
+  position: "absolute",
+  top: "20px",
+  left: "20px",
+  width: "100px",
 });
 
 const RightPane = styled("div")(({ theme }) => ({
@@ -37,6 +49,12 @@ const RightPane = styled("div")(({ theme }) => ({
   justifyContent: "center",
   alignItems: "left",
   padding: theme.spacing(2),
+  [theme.breakpoints.down("sm")]: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+  },
 }));
 
 const LoginForm = styled(Form)(({ theme }) => ({
@@ -61,6 +79,7 @@ const Login = () => {
       <LeftPane>
         <ImageContainer>
           <img src={Mask} alt="Login" />
+          <Logo src={logo} alt="Logo" />
         </ImageContainer>
       </LeftPane>
       <RightPane>
