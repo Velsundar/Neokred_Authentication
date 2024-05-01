@@ -16,7 +16,10 @@ export const SignUpSchema = Yup.object().shape({
   confirmPassword: Yup.string()
     .oneOf([Yup.ref("password"), null], "Passwords must match")
     .required("Confirm password is required"),
-  dateOfBirth: Yup.date().required("Date of birth is required"),
+  dateOfBirth: Yup.date()
+    .required("Date of birth is required")
+    .min(new Date(1900, 0, 1), "Date of birth must be after 01/01/1900")
+    .max(new Date(), "Date of birth cannot be in the future"),
   phoneNumber: Yup.string()
     .matches(/^\d{10}$/, "Phone Number must be a valid 10-digit number")
     .required("Phone Number is Required"),
@@ -28,7 +31,7 @@ export const SignUpSchema = Yup.object().shape({
     .max(50, "City must be at most 50 characters long")
     .required("City is required"),
   state: Yup.string().required("State is required"),
-  zipcode: Yup.string()
+  zipCode: Yup.string()
     .matches(/^\d{6}$/, "Zip Code must be a 6-digit number")
     .required("Zip Code is required"),
   country: Yup.string().required("Country is required"),

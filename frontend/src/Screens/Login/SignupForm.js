@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { styled } from "@mui/system";
-import { Typography, Link, Box, Grid, MenuItem } from "@mui/material";
+import { Typography, Link, Box, Grid } from "@mui/material";
 import Mask from "../../Assets/Images/Mask1.png";
 import InputField from "../../components/InputFields";
 import Button from "../../components/Buttons";
@@ -8,7 +8,9 @@ import theme from "../../styles/theme";
 import { Formik, Form, Field } from "formik";
 import { SignUpSchema } from "../../data/YUP/Signup.yup";
 import logo from "../../Assets/Images/logo.png";
-import axios from "axios";
+import { register } from "../../service/authService";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const RootContainer = styled("div")({
   display: "flex",
@@ -57,31 +59,16 @@ const RightPane = styled("div")(({ theme }) => ({
     transform: "translate(-50%, -50%)",
   },
 }));
+const notifySuccess = () => toast.success("User registered successfully!");
 
-const LoginForm = styled(Form)(({ theme }) => ({
-  width: "100%",
-  maxWidth: 360,
-  display: "flex",
-  flexDirection: "column",
-}));
+// const LoginForm = styled(Form)(({ theme }) => ({
+//   width: "100%",
+//   maxWidth: 360,
+//   display: "flex",
+//   flexDirection: "column",
+// }));
 
 const SignupForm = () => {
-  const [countries, setCountries] = useState([]);
-  console.log("countries", countries.name);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("https://restcountries.com/v3.1/all");
-        const countriesData = response.data;
-        setCountries(countriesData);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
   const initialValues = {
     fullName: "",
     email: "",
@@ -93,13 +80,19 @@ const SignupForm = () => {
     address: "",
     city: "",
     state: "",
-    zipcode: "",
+    zipCode: "",
     country: "",
   };
 
-  const handleSubmit = (values, { resetForm }) => {
-    console.log(values);
-    resetForm();
+  const handleSubmit = async (values, { resetForm }) => {
+    try {
+      const token = await register(values);
+      console.log("Registration successful. Token:", token);
+      resetForm();
+      notifySuccess();
+    } catch (error) {
+      console.error("Registration failed:", error);
+    }
   };
   return (
     <RootContainer>
@@ -172,7 +165,7 @@ const SignupForm = () => {
                     label="Date of Birth"
                     type="text"
                     color={theme.palette.text.secondary}
-                    placeholder={"12/12/12"}
+                    placeholder={"MM/DD/YYYY"}
                     required
                     error={errors.dateOfBirth && touched.dateOfBirth}
                     helperText={
@@ -300,15 +293,15 @@ const SignupForm = () => {
                 <Grid item xs={3}>
                   <Field
                     as={InputField}
-                    name="zipcode"
-                    label="Zipcode"
+                    name="zipCode"
+                    label="zipCode"
                     type="text"
                     color={theme.palette.text.secondary}
                     placeholder={"*********"}
                     required
-                    error={errors.zipcode && touched.zipcode}
+                    error={errors.zipCode && touched.zipCode}
                     helperText={
-                      errors.zipcode && touched.zipcode && errors.zipcode
+                      errors.zipCode && touched.zipCode && errors.zipCode
                     }
                   />
                 </Grid>
@@ -337,6 +330,7 @@ const SignupForm = () => {
                 variant="contained"
                 color="primary"
                 width="50%"
+                type="submit"
                 style={{
                   marginTop: "8px",
                   backgroundColor: theme.palette.primary.button,
