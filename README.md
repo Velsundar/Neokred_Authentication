@@ -50,7 +50,7 @@ Start the server(cd backend)
 
 ![App Screenshot](/frontend/src/Assets/Images/README/LOGIN.png)
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+![App Screenshot](/frontend/src/Assets/Images/README/PROFILE.png)
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+![App Screenshot](/frontend/src/Assets/Images/README/REGISTER.png)
 
